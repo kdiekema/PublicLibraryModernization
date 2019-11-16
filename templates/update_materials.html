@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+  <h3>{{ legend }}</h3>
+
+  <form method="POST" action="">
+
+    {{ form.csrf_token }}
+    {{form.ID.label}} {{form.ID(size=5, readonly=true) }}
+    {{ form.materialType.label }} {{ form.materialType(size=20) }}
+    {{ form.callNumber.label }} {{ form.callNumber(size=20) }}
+    {{ form.title.label }} {{ form.title(size=20)  }}
+    {{ form.author.label }} {{ form.author(size=20) }}
+    {{ form.publisher.label }} {{ form.publisher(size=20) }}
+    {{ form.copyright.label }} {{ form.copyright(size=20) }}
+    {{ form.ISBN.label }} {{ form.ISBN(size=20) }}
+    {{ form.description.label }} {{ form.description(size=20) }}
+
+    <input type="submit" value="Save">
+
+  </form>
+
+</div>
+{% endblock %}
