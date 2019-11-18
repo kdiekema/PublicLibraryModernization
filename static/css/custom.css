@@ -1,0 +1,90 @@
+.footer {
+  height: 50px;
+  margin-top: -50px;
+  clear:both;
+}
+
+.wrapper{
+	background-color: white;
+	width: 80%; /*set the width you want for th div */
+	margin: 0 auto; /* centers the div on the page */
+	text-align: left; /*left justifies the text in the div */
+	border: 1px solid black; /*put a border around the box */
+	padding: 20px;
+	float: left;
+}
+
+.sidebar{
+	background-color: red;
+	width: 20%; /*set the width you want for th div */
+	margin: 0 auto; /* centers the div on the page */
+	text-align: left; /*left justifies the text in the div */
+	border: 1px solid black; /*put a border around the box */
+	padding: 20px;
+	float: left;
+}
+
+
+/* content div */
+.data{
+	float:left;
+	width: 97%; /*set the width you want for the div */
+	margin: 0 auto; /* centers the div on the page */
+	text-align: left; /*left justifies the text in the div */
+	padding: 20px;
+	border: 1px solid blue;
+}
+
+.button {
+  background-color: rgb(76, 116, 175); /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+body{
+	background-color: white
+}
+
+h1 {
+	font-weight: bold;
+	font-size: 50px;
+	padding-left: 20px;
+	color: white;
+}
+
+input{
+	padding:10px;
+}
+
+
+.btn .btn-danger{
+	background-color: teal;
+	color: White;
+}
+
+.btn .btn-danger:hover{
+	background-color: blue;
+	color: white;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  clear: right;
+}
+
+li {
+	float: left;
+  }
+  
+  a {
+	display: block;
+	padding: 8px;
+	background-color: #dddddd;
+  }
