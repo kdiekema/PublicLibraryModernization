@@ -66,7 +66,7 @@ def search():
 def add_materials():
     form = MaterialsForm()
     if form.validate_on_submit():
-            player = g3_materials(ID=form.ID.data, materialType=form.materialType.data, callNumber=form.callNumber.data, title=form.title.data, author=form.author.data, publisher=form.publisher.data, title=form.copyright.data, ISBN=form.ISBN.data,
+            player = g3_materials(ID=form.ID.data, materialType=form.materialType.data, callNumber=form.callNumber.data, title=form.title.data, author=form.author.data, publisher=form.publisher.data, copyright=form.copyright.data, ISBN=form.ISBN.data,
                 description=form.description.data)
             db.session.add(materials)
             db.session.commit()
