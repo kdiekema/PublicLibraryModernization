@@ -8,6 +8,7 @@ import pymysql
 import secrets
 
 
+
 conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 
 app = Flask(__name__)
@@ -75,6 +76,10 @@ def index():
     all_materials = g3_materials.query.all()
     return render_template('index.html',  materials=all_materials, pageTitle='Materials')
 
+@app.route('/about')
+def about():
+    return render_template('about.html', pageTitle='About')
+	
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':

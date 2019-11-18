@@ -12,10 +12,10 @@
 
 		<div>
 				<ul>
-					<li><a href="{{ url_for('About')}}">About</a></li>
-					<li><a href="{{ url_for('materials')}}">Materials</a></li>
-					<li><a href="{{ url_for('checkin')}}">Check-In/Out</a></li>
-					<li><a href="{{ url_for('Settings')}}">Settings</a></li>
+					<li><a href="{{ url_for('about')}}">About</a></li>
+					<li><a href="{{ url_for('add_materials')}}">Materials</a></li>
+					<li><a>Check-In/Out</a></li>
+					<li><a>Settings</a></li>
 				</ul>
 		</div>
 				<br />
@@ -26,9 +26,7 @@
 	    {% endblock %}
 	</div> <!-- close the data div -->
 	<div class="sidebar">
-		{% sidebar body %}
 		
-		{% endsidebar %}
 	</div>
 <div style="clear:both;"></div> <!-- clear styling -->
 
@@ -43,7 +41,6 @@
 	<p> Saturday: 9-12 </p>
 	<p> Sunday: CLOSED </p>
 	</div>
-	
 	<div style="float:left">
 	<H3> Location <H3>
 	<p>Somewhere in North Liberty</p>
