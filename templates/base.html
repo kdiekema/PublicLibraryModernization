@@ -5,51 +5,33 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 <body>
-<div>
-<hr>
-<div>
-<div class="wrapper">
 
-		<div>
+<div class="topnav col-sm-12">
 				<ul>
+					<li><a href="{{ url_for('index')}}">Home</a></li>
 					<li><a href="{{ url_for('about')}}">About</a></li>
 					<li><a href="{{ url_for('add_materials')}}">Materials</a></li>
 					<li><a>Check-In/Out</a></li>
-					<li><a>Settings</a></li>
+					<li><a href="{{ url_for('add_patrons')}}">Patrons</a></li>
 				</ul>
 		</div>
 				<br />
+<div class="wrapper col-sm-12">
+
 	<div class="data">
 
 	    {% block body %}
 
 	    {% endblock %}
 	</div> <!-- close the data div -->
-	<div class="sidebar">
-		
-	</div>
+	
 <div style="clear:both;"></div> <!-- clear styling -->
 
 </div> <!-- close the wrapper div -->
 </div>
 
   <footer class="footer">
-  <div>
-	<div style="float:left">
-	<H3> Hours </H3>
-	<p> Monday - Friday: 9-5 </p>
-	<p> Saturday: 9-12 </p>
-	<p> Sunday: CLOSED </p>
-	</div>
-	<div style="float:left">
-	<H3> Location <H3>
-	<p>Somewhere in North Liberty</p>
-	<p> North Liberty, IA </p>
-	</div>
-	<div style="float:left">
-	<H3> Phone </H3>
-	<p>389-232-3231</p>
-	</div>
+  <p>footer </p>
 </div>
   </footer>
 

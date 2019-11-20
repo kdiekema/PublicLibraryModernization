@@ -73,8 +73,7 @@ class PatronsForm(FlaskForm):
 
 @app.route('/') #I'm not sure what the app route would be for our database design
 def index():
-    all_materials = g3_materials.query.all()
-    return render_template('index.html',  materials=all_materials, pageTitle='Materials')
+    return render_template('index.html')
 
 @app.route('/about')
 def about():
