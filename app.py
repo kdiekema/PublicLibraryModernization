@@ -28,7 +28,7 @@ class g3_materials(db.Model):
     ISBN= db.Column(db.String(255))
     description= db.Column(db.String(255))
 
-class g3_patrons(db.Model):
+class group3_patrons(db.Model):
     patronID= db.Column(db.Integer, primary_key=True)
     first_name= db.Column(db.String(255))
     last_name= db.Column(db.String(255))
@@ -78,7 +78,7 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html', pageTitle='About')
-	
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -150,10 +150,14 @@ def update_materials(materialsID):
 @app.route('/materials/<int:materialsID>', methods=['GET','POST'])
 def get_materials(materialsID):
     materials = g3_materials.query.get_or_404(materialsID)
-    return render_template('materials.html', form=materials, pageTitle= 'Materials Details', legend='Details Page')
+    return render_template('materials.html', form=materials, pageTitle= 'Materials Details')
 
 #form= materials could be different if Isaac uses {% if material (s)%} in index
 
+@app.route('/patrons')
+def patrons():
+    all_patrons= group3_patrons.query.all()
+    return render_template('patrons.html', patrons=all_patrons, pageTitle="Patrons")
 
 @app.route('/add_patrons', methods=['GET', 'POST'])
 def add_patrons():
@@ -214,10 +218,6 @@ def update_patrons(patronID):
     return render_template('update_patrons.html', form=form, pageTitle='Update Patrons',
                             legend="Update Patrons")
 
-@app.route('/patrons/<int:patronID>', methods=['GET','POST'])
-def get_patrons(patronID):
-    patrons = g3_patrons.query.get_or_404(patronID)
-    return render_template('patrons.html', form=patrons, pageTitle= 'Patron Details', legend='Details')
 
 
 if __name__ == '__main__':
