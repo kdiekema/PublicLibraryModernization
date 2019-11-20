@@ -78,7 +78,7 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html', pageTitle='About')
-	
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
