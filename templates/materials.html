@@ -2,9 +2,7 @@
 {% block body %}
 <div>
 
-
-<p><a href="{{ url_for('index')}}"> Home </a></p>
-  <h3>{{ legend }}</h3>
+  <h3>Materials</h3>
 
     {% if form %}
       <form method = "POST" action="">
@@ -23,11 +21,7 @@
           <input type="submit" formaction="{{url_for('delete_materials', ID=form.ID)}}" value="Delete">
 
 
-<!--
-in app.py we will have two player ID names so we dont get confused
-naming it materialsID
-actual database name is ID
--->
+
       </form>
       {% endif  %}
 </div>
