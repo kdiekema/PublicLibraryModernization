@@ -186,7 +186,7 @@ def update_patrons(patronID):
         patrons.patronID=form.patronID.data
         patrons.first_name = form.first_name.data
         patrons.last_name = form.last_name.data
-        patron.birthdate = form.birthdate.data
+        patrons.birthdate = form.birthdate.data
         patrons.address1 = form.address1.data
         patrons.address2 = form.address2.data
         patrons.city = form.city.data
