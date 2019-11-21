@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if form %}
+  <form method="POST">
+
+
+            {{ form.csrf_token }}
+            {{ form.first_name.label }} {{ form.first_name}}
+            {{ form.last_name.label }} {{ form.last_name}}
+            {{ form.birthdate.label }} {{ form.birthdate }}
+            {{ form.address1.label }} {{ form.address1 }}
+            {{ form.address2.label }} {{ form.address2 }}
+            {{ form.city.label }} {{ form.city }}
+            {{ form.state.label }} {{ form.state}}
+            {{ form.zip.label }} {{ form.zip }}
+            {{ form.phone.label }} {{ form.phone }}
+            {{ form.phone2.label }} {{ form.phone2}}
+            {{ form.email.label }} {{ form.email}}
+
+    <input type="submit" formaction="{{url_for('update_patrons', patronID=form.patronID)}}" value="Update">
+    <input type="submit" formaction="{{url_for('delete_patrons', patronID=form.patronID)}}" value="Delete">
+
+
+  </form>
+{% endif %}
+{% endblock %}
