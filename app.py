@@ -79,6 +79,11 @@ def index():
 def about():
     return render_template('about.html', pageTitle='About')
 
+@app.route('/materials')
+def materials():
+        all_materials= g3_materials.query.all()
+        return render_template('materials.html', materials=all_materials, pageTitle="Materials", form=materials)
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -102,7 +107,7 @@ def add_materials():
                 description=form.description.data)
             db.session.add(materials)
             db.session.commit()
-            return redirect('/')
+            return redirect('/materials')
 
     return render_template('add_materials.html', form=form, pageTitle='Add A New Material')
 
@@ -113,7 +118,7 @@ def delete_materials(ID):
         db.session.delete(materials)
         db.session.commit()
         flash('Material was successfully deleted!')
-        return redirect("/")
+        return redirect("/materials")
     else: #if it's a GET request, send them to the home page
         return redirect
 
@@ -158,6 +163,7 @@ def get_materials(materialsID):
 def patrons():
     all_patrons= group3_patrons.query.all()
     return render_template('patrons.html', patrons=all_patrons, pageTitle="Patrons")
+
 
 @app.route('/add_patrons', methods=['GET', 'POST'])
 def add_patrons():

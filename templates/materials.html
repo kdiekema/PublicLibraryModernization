@@ -1,28 +1,50 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-
-  <h3>Materials</h3>
-
-    {% if form %}
-      <form method = "POST" action="">
-          {{ form.csrf_token }}
-          {{form.ID.label}} {{form.ID}}
-          {{ form.materialType.label }} {{ form.materialType}}
-          {{ form.callNumber.label }} {{ form.callNumber}}
-          {{ form.title.label }} {{ form.title }}
-          {{ form.author.label }} {{ form.author }}
-          {{ form.publisher.label }} {{ form.publisher }}
-          {{ form.copyright.label }} {{ form.copyright }}
-          {{ form.ISBN.label }} {{ form.ISBN }}
-          {{ form.description.label }} {{ form.description }}
-
-          <input type="submit" formaction="{{url_for('update_materials', materialsID=form.ID)}}" value="Update">
-          <input type="submit" formaction="{{url_for('delete_materials', ID=form.ID)}}" value="Delete">
+<p><a href="{{ url_for('add_materials')}}"> Add Materials </a></p>
+  <h3>{{ legend }}</h3>
 
 
+          {% if materials %}
+          <table>
+                <thead>
+                    <tr>
 
-      </form>
-      {% endif  %}
-</div>
-{% endblock %}
+                        <th>Materials ID</th>
+                        <th>Material Type</th>
+                        <th>Call Number</th>
+                        <th>Title</th>
+                        <th>Author </th>
+                        <th>Publisher </th>
+                        <th>Copyright</th>
+                        <th>ISBN</th>
+                        <th>Description</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in materials %}
+                    <tr>
+
+                        <td> {{ row.ID }}</td>
+                        <td> {{ row.materialType }}</td>
+                        <td> {{ row.callNumber }}</td>
+                        <td> {{ row.title }}</td>
+                        <td> {{ row.author }}</td>
+                        <td> {{ row.publisher }}</td>
+                        <td> {{ row.copyright }}</td>
+                        <td> {{ row.ISBN }}</td>
+                        <td> {{ row.description }}</td>
+
+            <td>
+              <form action="{{ url_for('get_materials', materialsID=row.ID) }}" method="POST">
+                         <input type="submit" value="Details" class="btn btn-info" />
+                       </form>
+                            </td>
+                              </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+        {% endif %}
+        {% endblock %}
