@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+  <h3>Materials</h3>
+
+    {% if form %}
+      <form method = "POST" action="">
+          {{ form.csrf_token }}
+          {{form.ID.label}} {{form.ID}}
+          {{ form.materialType.label }} {{ form.materialType}}
+          {{ form.callNumber.label }} {{ form.callNumber}}
+          {{ form.title.label }} {{ form.title }}
+          {{ form.author.label }} {{ form.author }}
+          {{ form.publisher.label }} {{ form.publisher }}
+          {{ form.copyright.label }} {{ form.copyright }}
+          {{ form.ISBN.label }} {{ form.ISBN }}
+          {{ form.description.label }} {{ form.description }}
+
+          <input type="submit" formaction="{{url_for('update_materials', ID=form.ID)}}" value="Update">
+          <input type="submit" formaction="{{url_for('delete_materials', ID=form.ID)}}" value="Delete">
+
+
+
+      </form>
+      {% endif  %}
+</div>
+{% endblock %}

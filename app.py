@@ -4,8 +4,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, DateField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 import pymysql
 import secrets
+
 
 
 
@@ -51,11 +53,11 @@ class MaterialsForm(FlaskForm):
     materialType = StringField('Material Type:', validators=[DataRequired()])
     callNumber= StringField('Call Number:', validators=[DataRequired()])
     title = StringField('Title:', validators=[DataRequired()])
-    author = StringField('Title:', validators=[DataRequired()])
-    publisher = StringField('Title:', validators=[DataRequired()])
-    copyright = StringField('Title:', validators=[DataRequired()])
-    ISBN = StringField('Title:', validators=[DataRequired()])
-    description = StringField('Title:')#data can be null for the descritpion so didnt know if we had to do a validator on it?
+    author = StringField('Author:')
+    publisher = StringField('Publisher:', validators=[DataRequired()])
+    copyright = StringField('Copyright:')
+    ISBN = StringField('ISBN:')
+    description = StringField('Description:')
 
 class PatronsForm(FlaskForm):
     patronID = IntegerField('PatronID:')
@@ -79,6 +81,7 @@ def index():
 def about():
     return render_template('about.html', pageTitle='About')
 
+<<<<<<< HEAD
 @app.route('/materials')
 def materials():
         all_materials= g3_materials.query.all()
@@ -86,23 +89,29 @@ def materials():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+=======
+@app.route('/patrons')
+def patrons():
+    all_patrons= group3_patrons.query.all()
+    return render_template('patrons.html', patrons=all_patrons, pageTitle="Patrons")
+
+@app.route('/search_patrons', methods=['GET', 'POST'])
+def search_patrons():
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
     if request.method == 'POST':
-        print('post method')
         form = request.form
         search_value = form['search_string']
-        print(search_value)
-        search = "%{}%".format(search_value)
-        print(search)
-        results = g3_materials.query.filter(g3_materials.ID.like(search)).all()
-        #or
-        return render_template('index.html', materials=results, pageTitle='Materials Search', legend='Search Results')
+        search = "%{0}%".format(search_value)
+        results = group3_patrons.query.filter(or_(group3_patrons.last_name.like(search), group3_patrons.email.like(search), group3_patrons.phone.like(search), group3_patrons.phone2.like(search))).all()
+        return render_template('patrons.html', patrons=results, pageTitle='Patrons')
     else:
-        return redirect('/')
+        return redirect('/patrons')
 
-@app.route('/add_materials', methods=['GET', 'POST'])
-def add_materials():
-    form = MaterialsForm()
+@app.route('/add_patrons', methods=['GET','POST'])
+def add_patrons():
+    form = PatronsForm()
     if form.validate_on_submit():
+<<<<<<< HEAD
             player = g3_materials(ID=form.ID.data, materialType=form.materialType.data, callNumber=form.callNumber.data, title=form.title.data, author=form.author.data, publisher=form.publisher.data, copyright=form.copyright.data, ISBN=form.ISBN.data,
                 description=form.description.data)
             db.session.add(materials)
@@ -136,95 +145,152 @@ def update_materials(materialsID):
         materials.copyright = form.copyright.data
         materials.ISBN = form.ISBN.data
         materials.description = form.description.data
+=======
+        patron = group3_patrons(first_name=form.first_name.data, last_name=form.last_name.data, birthdate= form.birthdate.data, address1=form.address1.data, address2=form.address2.data, city = form.city.data, state = form.state.data, zip = form.zip.data, phone = form.phone.data, phone2 = form.phone2.data, email = form.email.data)
+        db.session.add(patron)
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
         db.session.commit()
-        flash('Your materials have been updated.')
-        return redirect(url_for('get_materials', materialsID=materials.ID))
-    #elif request.method == 'GET':
-    form.ID.data = materials.ID
-    form.materialType.data = materials.materialType
-    form.callNumber.data = materials.callNumber
-    form.title.data = materials.title
-    form.author.data = materials.author
-    form.publisher.data = materials.publisher
-    form.copyright.data = materials.copyright
-    form.ISBN.data = materials.ISBN
-    form.description.data = materials.description
-    return render_template('update_materials.html', form=form, pageTitle='Update Materials',
-                            legend="Update Materials")
+        return redirect('/')
 
-@app.route('/materials/<int:materialsID>', methods=['GET','POST'])
-def get_materials(materialsID):
-    materials = g3_materials.query.get_or_404(materialsID)
-    return render_template('materials.html', form=materials, pageTitle= 'Materials Details')
+    return render_template('add_patrons.html', form=form, pageTitle='Add Patron')
 
-#form= materials could be different if Isaac uses {% if material (s)%} in index
 
-@app.route('/patrons')
-def patrons():
-    all_patrons= group3_patrons.query.all()
-    return render_template('patrons.html', patrons=all_patrons, pageTitle="Patrons")
+@app.route('/patron/<int:patronID>', methods=['GET','POST'])
+def patron(patronID):
+    patron = group3_patrons.query.get_or_404(patronID)
+    return render_template('patron.html', form=patron, pageTitle='Patron Details')
 
+<<<<<<< HEAD
 
 @app.route('/add_patrons', methods=['GET', 'POST'])
 def add_patrons():
+=======
+@app.route('/patron/<int:patronID>/update', methods=['GET','POST'])
+def update_patrons(patronID):
+    patron = group3_patrons.query.get_or_404(patronID)
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
     form = PatronsForm()
     if form.validate_on_submit():
-            player = g3_patrons(patronID=form.ID.data, first_name=form.first_name.data, last_name=form.last_name.data, birthdate=form.birthdate.data, address1=form.address1.data, address2=form.address2.data, city=form.city.data, state=form.state.data,
-                zip=form.zip.data, phone1=form.phone1.data, phone2=form.phone2.data, email=form.email.data)
-            db.session.add(patrons)
-            db.session.commit()
-            return redirect('/')
+       patron.patronID=form.patronID.data
+       patron.first_name = form.first_name.data
+       patron.last_name = form.last_name.data
+       patron.birthdate = form.birthdate.data
+       patron.address1 = form.address1.data
+       patron.address2 = form.address2.data
+       patron.city = form.city.data
+       patron.state = form.state.data
+       patron.zip = form.zip.data
+       patron.phone = form.phone.data
+       patron.phone2 = form.phone2.data
+       patron.email = form.email.data
+       db.session.commit()
+       flash('Your patron has been updated.')
+       return redirect(url_for('patron', patronID=patron.patronID))
+    #elif request.method == 'GET':
+    form.patronID.data = patron.patronID
+    form.first_name.data = patron.first_name
+    form.last_name.data = patron.last_name
+    form.birthdate.data = patron.birthdate
+    form.address1.data = patron.address1
+    form.address2.data = patron.address2
+    form.city.data = patron.city
+    form.state.data = patron.state
+    form.zip.data = patron.zip
+    form.phone.data = patron.phone
+    form.phone2.data = patron.phone2
+    form.email.data = patron.email
+    return render_template('update_patrons.html', form=form, pageTitle='Update Patrons',
+                            legend="Update A Patron")
 
-    return render_template('add_patrons.html', form=form, pageTitle='Add A New Patron')
-
-@app.route('/delete_patrons/<int:patronID>', methods=['GET','POST'])
+@app.route('/patron/<int:patronID>/delete', methods=['POST'])
 def delete_patrons(patronID):
-    if request.method == 'POST': #if it's a POST request, delete the friend from the database
-        player = g3_patrons.query.get_or_404(ID)
-        db.session.delete(patrons)
+    if request.method == 'POST': #if it's a POST request, delete the pet from the database
+        patron = group3_patrons.query.get_or_404(patronID)
+        db.session.delete(patron)
         db.session.commit()
         flash('Patron was successfully deleted!')
-        return redirect("/")
+        return redirect("/patrons")
     else: #if it's a GET request, send them to the home page
-        return redirect
+        return redirect("/patrons")
 
-@app.route('/patrons/<int:patronID>/update', methods=['GET','POST']) #materialsID comes from update materials page
-def update_patrons(patronID):
-    materials = g3_patrons.query.get_or_404(patronID)
+
+
+
+
+
+@app.route('/materials')
+def materials():
+    all_materials= g3_materials.query.all()
+    return render_template('materials.html', materials=all_materials, pageTitle="Materials")
+
+@app.route('/search_materials', methods=['GET', 'POST'])
+def search_materials():
+    if request.method == 'POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        results = g3_materials.query.filter(or_(g3_materials.title.like(search), g3_materials.author.like(search))).all()
+        return render_template('materials.html', materials=results, pageTitle='Materials')
+    else:
+        return redirect('/materials')
+
+@app.route('/add_material', methods=['GET','POST'])
+def add_materials():
     form = MaterialsForm()
-    if form.validate_on_submit(): #
-        patrons.patronID=form.patronID.data
-        patrons.first_name = form.first_name.data
-        patrons.last_name = form.last_name.data
-        patron.birthdate = form.birthdate.data
-        patrons.address1 = form.address1.data
-        patrons.address2 = form.address2.data
-        patrons.city = form.city.data
-        patrons.state = form.state.data
-        patrons.zip = form.zip.data
-        patrons.phone = form.phone.data
-        patrons.phone2 = form.phone2.data
-        patrons.email = form.email.data
+    if form.validate_on_submit():
+        material = g3_materials(materialType=form.materialType.data, callNumber= form.callNumber.data, title=form.title.data, author=form.author.data, publisher = form.publisher.data, copyright = form.copyright.data, ISBN = form.ISBN.data, description = form.description.data)
+        db.session.add(material)
         db.session.commit()
-        flash('Your patron has been updated.')
-        return redirect(url_for('get_patrons', patronID=patrons.patronID))
+        return redirect('/materials')
+
+    return render_template('add_materials.html', form=form, pageTitle='Add Materials')
+
+
+@app.route('/material/<int:ID>', methods=['GET','POST'])
+def material(ID):
+    material = g3_materials.query.get_or_404(ID)
+    return render_template('material.html', form=material, pageTitle='Material Details')
+
+@app.route('/material/<int:ID>/update', methods=['GET','POST'])
+def update_materials(ID):
+    material = g3_materials.query.get_or_404(ID)
+    form = MaterialsForm()
+    if form.validate_on_submit():
+        material.ID=form.ID.data
+        material.materialType = form.materialType.data
+        material.callNumber = form.callNumber.data
+        material.title = form.title.data
+        material.author = form.author.data
+        material.publisher = form.publisher.data
+        material.copyright = form.copyright.data
+        material.ISBN = form.ISBN.data
+        material.description = form.description.data
+        db.session.commit()
+        flash('Your material has been updated.')
+        return redirect(url_for('material', ID=material.ID))
     #elif request.method == 'GET':
-        patrons.patronID=form.patronID.data
-        patrons.first_name = form.first_name.data
-        patrons.last_name = form.last_name.data
-        patron.birthdate = form.birthdate.data
-        patrons.address1 = form.address1.data
-        patrons.address2 = form.address2.data
-        patrons.city = form.city.data
-        patrons.state = form.state.data
-        patrons.zip = form.zip.data
-        patrons.phone = form.phone.data
-        patrons.phone2 = form.phone2.data
-        patrons.email = form.email.data
-    return render_template('update_patrons.html', form=form, pageTitle='Update Patrons',
-                            legend="Update Patrons")
+    form.ID.data=material.ID
+    form.materialType.data = material.materialType
+    form.callNumber.data = material.callNumber
+    form.title.data = material.title
+    form.author.data = material.author
+    form.publisher.data = material.publisher
+    form.copyright.data = material.copyright
+    form.ISBN.data = material.ISBN
+    form.description.data = material.description
+    return render_template('update_materials.html', form=form, pageTitle='Update Materials',
+                            legend="Update A Material")
 
-
+@app.route('/material/<int:ID>/delete', methods=['POST'])
+def delete_materials(ID):
+    if request.method == 'POST': #if it's a POST request, delete the pet from the database
+        material = g3_materials.query.get_or_404(ID)
+        db.session.delete(material)
+        db.session.commit()
+        flash('Material was successfully deleted!')
+        return redirect("/materials")
+    else: #if it's a GET request, send them to the home page
+        return redirect("/materials")
 
 if __name__ == '__main__':
     app.run(debug=True)

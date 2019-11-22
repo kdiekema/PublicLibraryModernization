@@ -1,15 +1,26 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
+<<<<<<< HEAD
 <p><a href="{{ url_for('add_materials')}}"> Add Materials </a></p>
   <h3>{{ legend }}</h3>
 
+=======
+   <p> <a href="{{url_for('.add_materials')}}"> Add New Material</a>
+  <h3>{{ legend }}</h3>
+
+  <form method="POST">
+     <input type="text" autofocus="autofocus" name = "search_string">
+     <input type="submit" formaction = "/search_materials" value="Search">
+   </form>
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
 
           {% if materials %}
           <table>
                 <thead>
                     <tr>
 
+<<<<<<< HEAD
                         <th>Materials ID</th>
                         <th>Material Type</th>
                         <th>Call Number</th>
@@ -19,10 +30,19 @@
                         <th>Copyright</th>
                         <th>ISBN</th>
                         <th>Description</th>
+=======
+                        <th>Material ID</th>
+                        <th>Material Type</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>ISBN</th>
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
 
                     </tr>
                 </thead>
 
+<<<<<<< HEAD
                 <tbody>
                     {% for row in materials %}
                     <tr>
@@ -39,6 +59,26 @@
 
             <td>
               <form action="{{ url_for('get_materials', materialsID=row.ID) }}" method="POST">
+=======
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in materials %}
+                    <tr>
+
+                        <td> {{ row.ID }}</td>
+                        <td> {{ row.materialType }}</td>
+                        <td> {{ row.title }} </td>
+                        <td> {{ row.author }} </td>
+                        <td>{{row.publisher}} </td>
+                        <td> {{ row.ISBN }} </td>
+
+
+
+            <td>
+              <form action="{{ url_for('material', ID=row.ID) }}" method="POST">
+>>>>>>> ac74472e9af8fb3aa80177e34a7aa57ae23c1275
                          <input type="submit" value="Details" class="btn btn-info" />
                        </form>
                             </td>
