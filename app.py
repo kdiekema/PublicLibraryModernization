@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField, IntegerField, DateField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
+from sqlalchemy.sql.functions import func
 import pymysql
 import secrets
 
@@ -44,6 +45,12 @@ class group3_patrons(db.Model):
     phone2= db.Column(db.String(20))
     email= db.Column(db.String(255))
 
+class g3_circulation(db.Model):
+    circulationID = db.Column(db.Integer, primary_key=True)
+    patronsID = db.Column(db.ForeignKey('group3_patrons.patronID'))
+    materialsID = db.Column(db.ForeignKey('g3_materials.ID'))
+    checkoutDate = db.Column(db.Date)
+    dueDate = db.Column(db.Date)
 
 def __repr__(self):
         return "ID: {0} | Material Type: {1} |  Call Number: {2} |  Title: {3} | Author: {4} | Publisher: {5} | Copyright: {6} | ISBN: {7} | Description: {8}".format(self.ID, self.materialType, self.callNumber, self.title, self.author, self.publisher, self.copyright, self.ISBN, self.description)
@@ -60,20 +67,27 @@ class MaterialsForm(FlaskForm):
     description = StringField('Description:')
 
 class PatronsForm(FlaskForm):
-    patronID = IntegerField('PatronID:')
+    patronID = IntegerField('Patron ID:')
     first_name = StringField('First Name:', validators=[DataRequired()])
     last_name= StringField('Last Name:', validators=[DataRequired()])
-    birthdate = StringField('Birthdate:', validators=[DataRequired()])
+    birthdate = DateField('Birthdate:', validators=[DataRequired()])
     address1 = StringField('Address 1:', validators=[DataRequired()])
     address2 = StringField('Address 2:')
     city = StringField('City:', validators=[DataRequired()])
     state = StringField('State:', validators=[DataRequired()])
-    zip = StringField('Zip:', validators=[DataRequired()])#data can be null for the descritpion so didnt know if we had to do a validator on it?
+    zip = StringField('Zip:', validators=[DataRequired()])
     phone = StringField('Phone 1:')
     phone2 = StringField('Phone 2:')
     email = StringField('Email:')
 
-@app.route('/') #I'm not sure what the app route would be for our database design
+class CirculationForm(FlaskForm):
+    circulationID = IntegerField('Circulation ID:')
+    patronsID = IntegerField('Patron ID:',  validators=[DataRequired()])
+    materialsID = IntegerField('Material ID:',  validators=[DataRequired()])
+    checkoutDate = DateField('Checkout Date:',  validators=[DataRequired()] )
+    dueDate = DateField('Due Date:',  validators=[DataRequired()])
+
+@app.route('/')
 def index():
     return render_template('index.html')
 
@@ -239,6 +253,38 @@ def delete_materials(ID):
         return redirect("/materials")
     else: #if it's a GET request, send them to the home page
         return redirect("/materials")
+
+@app.route('/circulation')
+def circulation():
+    all_circulation= g3_circulation.query.all()
+    return render_template('circulation.html', circulation=all_circulation, pageTitle="Circulation")
+
+@app.route('/checkout', methods=['GET','POST'])
+def checkout():
+    form = CirculationForm()
+    if form.validate_on_submit():
+        circulation = g3_circulation(patronsID=form.patronsID.data, materialsID= form.materialsID.data, checkoutDate=form.checkoutDate.data, dueDate=form.dueDate.data)
+        db.session.add(circulation)
+        db.session.commit()
+        return redirect('/circulation')
+
+    return render_template('checkout.html', form=form, pageTitle='Check Out')
+
+@app.route('/checkin/<int:circulationID>', methods=['GET','POST'])
+def checkin(circulationID):
+    circulation = g3_circulation.query.get_or_404(circulationID)
+    return render_template('checkin.html', form=circulation, pageTitle='Check In')
+
+@app.route('/checkin/<int:circulationID>/confirm', methods=['POST'])
+def confirm(circulationID):
+    if request.method == 'POST':
+        circulation = g3_circulation.query.get_or_404(circulationID)
+        db.session.delete(circulation)
+        db.session.commit()
+        flash('Material was successfully checked in')
+        return redirect("/circulation")
+    else: #if it's a GET request, send them to the home page
+        return redirect("/circulation")
 
 if __name__ == '__main__':
     app.run(debug=True)
