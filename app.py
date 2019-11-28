@@ -5,9 +5,10 @@ from wtforms import StringField, SubmitField, IntegerField, DateField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
-from sqlalchemy.sql.functions import func
 import pymysql
 import secrets
+import datetime
+from datetime import date
 
 
 
@@ -285,6 +286,21 @@ def confirm(circulationID):
         return redirect("/circulation")
     else: #if it's a GET request, send them to the home page
         return redirect("/circulation")
+
+@app.route('/overdue', methods=['GET', 'POST'])
+def overdue():
+    if request.method == 'POST':
+        overdue = g3_circulation.query.filter(g3_circulation.dueDate<date.today())
+        return render_template('circulation.html', circulation=overdue, pageTitle='Circulation')
+    else:
+        return redirect('/circulation')
+
+@app.route('/due', methods=['GET', 'POST'])
+def due():
+    due = g3_circulation.query.filter(g3_circulation.dueDate==date.today())
+    return render_template('circulation.html', circulation=due, pageTitle='Circulation')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
