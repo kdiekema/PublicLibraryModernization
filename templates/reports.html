@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-<p> hello </p>
-{% for i in patron_count %}
-      {{i}}
-{% endfor %}
-
+<p> Patrons Present in the system: {{patronspresent}} </p>
+<p> Materials Present in the system: {{materialspresent}} </p>
+<p> Materials in Circulation: {{circulationspresent}} </p>
 {% endblock %}

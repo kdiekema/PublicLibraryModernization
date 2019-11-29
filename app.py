@@ -300,6 +300,12 @@ def due():
     due = g3_circulation.query.filter(g3_circulation.dueDate==date.today())
     return render_template('circulation.html', circulation=due, pageTitle='Circulation')
 
+@app.route('/reports', methods=['GET', 'POST'])
+def reports():
+    patroncount = group3_patrons.query.filter(group3_patrons.patronID).count()
+    materialcount = g3_materials.query.filter(g3_materials.ID).count()
+    circulationcount = g3_circulation.query.filter(g3_circulation.circulationID).count()
+    return render_template('reports.html', patronspresent=patroncount, materialspresent = materialcount, circulationspresent = circulationcount, pageTitle='Report')
 
 
 if __name__ == '__main__':
