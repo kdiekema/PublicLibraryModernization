@@ -162,8 +162,10 @@ def delete_patrons(patronID):
         return redirect("/patrons")
 
 
-
-
+@app.route('/checkout')
+def checkout():
+    all_checkout= g3_circulation.query.all()
+    return render_template('checkout.html', checkout=all_checkout, pageTitle="Circulation")
 
 
 @app.route('/materials')
@@ -185,7 +187,6 @@ def search_materials():
 @app.route('/add_material', methods=['GET','POST'])
 def add_materials():
     form = MaterialsForm()
-<<<<<<< HEAD
     if form.validate_on_submit(): #
         patrons.patronID=form.patronID.data
         patrons.first_name = form.first_name.data
