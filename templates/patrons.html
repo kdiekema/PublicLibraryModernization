@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block body %}
 <div>
-
+   <p> <a href="{{url_for('.add_patrons')}}"> Add New Patron</a>
   <h3>{{ legend }}</h3>
 
+  <form method="POST">
+     <input type="text" autofocus="autofocus" name = "search_string">
+     <input type="submit" formaction = "/search_patrons" value="Search">
+   </form>
 
           {% if patrons %}
           <table>
@@ -13,12 +17,6 @@
                         <th>Patron ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Birthdate</th>
-                        <th>Address 1</th>
-                        <th>Address 2</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Zip Code</th>
                         <th>Phone</th>
                         <th>Phone 2</th>
                         <th>Email</th>
@@ -33,18 +31,12 @@
                         <td> {{ row.patronID }}</td>
                         <td> {{ row.first_name }}</td>
                         <td> {{ row.last_name }}</td>
-                        <td> {{ row.birthdate }}</td>
-                        <td> {{ row.address1 }}</td>
-                        <td> {{ row.address2 }}</td>
-                        <td> {{ row.city }}</td>
-                        <td> {{ row.state }}</td>
-                        <td> {{ row.zip }}</td>
                         <td> {{ row.phone }}</td>
-                        <td> {{ row.phone1 }}</td>
+                        <td> {{ row.phone2 }}</td>
                         <td> {{ row.email }}</td>
 
             <td>
-              <form action="{{ url_for('patrons', patronID=row.patronID) }}" method="POST">
+              <form action="{{ url_for('patron', patronID=row.patronID) }}" method="POST">
                          <input type="submit" value="Details" class="btn btn-info" />
                        </form>
                             </td>

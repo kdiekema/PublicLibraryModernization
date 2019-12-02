@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+<div>
+
+  <h3>Checkoutl</h3>
+
+  <form method="POST" action="">
+
+
+    {{ form.csrf_token }}
+
+    {{ form.patronsID.label }} {{ form.patronsID(size = 20)}}
+    {{ form.materialsID.label }} {{ form.materialsID(size = 20)}}
+    {{ form.checkoutDate.label }} {{ form.checkoutDate(size = 20) }}
+    {{ form.dueDate.label }} {{ form.dueDate(size = 20) }}
+
+    <input type="submit" value="Checkout A Material">
+
+  </form>
+
+</div>
+{% endblock %}

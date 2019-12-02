@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if form %}
+  <form method="POST">
+
+
+            {{ form.csrf_token }}
+            {{ form.patronsID.label }} {{ form.patronsID}}
+            {{ form.materialsID.label }} {{ form.materialsID}}
+            {{ form.checkoutDate.label }} {{ form.checkoutDate }}
+            {{ form.dueDate.label }} {{ form.dueDate }}
+
+
+    <input type="submit" formaction="{{url_for('confirm', circulationID=form.circulationID)}}" value="Confirm Check-In">
+
+
+  </form>
+{% endif %}
+{% endblock %}
