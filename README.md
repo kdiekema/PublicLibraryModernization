@@ -20,7 +20,9 @@ CREATE TABLE `group3_patrons` (
   PRIMARY KEY (`patronID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
-USE f19_msci3300;
+Example of an insert query for Patrons Table:
+INSERT INTO `group3_patrons`(`first_name`,`last_name`,`birthdate`,`address 1`, `address 1`, `city`,`state`, `zip`,`phone`,`phone 2`, `email`)
+VALUES('Kirk','Ferentz','1955-08-01','886 Stadium Drive', '', 'Iowa City', 'IA', '52240', '', '', 'kirk-ferentz@uiowa.edu' );
 
 Materials Create Table:
 CREATE TABLE `g3_materials` (
@@ -39,7 +41,6 @@ CREATE TABLE `g3_materials` (
 Example of an insert query for Materials Table:
 INSERT INTO `g3_materials`(`materialType`,`callNumber`,`title`,`author`,`publisher`,`copyright`,`ISBN`, `description` )
 VALUES('Book','005.133/PERL/Oualline','Wicked cool Perl scripts : useful Perl scripts that solve difficult problems', 'Steve Oualline', 'No Starch Press','2006', '9781593270629', '' );
-
 
 Circulation Create Table:
 CREATE TABLE `g3_circulation` (
