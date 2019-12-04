@@ -5,6 +5,7 @@ from wtforms import StringField, SubmitField, IntegerField, DateField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
+from flask_bootstrap import Bootstrap
 import pymysql
 import secrets
 import datetime
@@ -16,10 +17,13 @@ from datetime import date
 conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 
 app = Flask(__name__)
+Bootstrap(app)
+
 app.config['SECRET_KEY']= 'aliq!#LiNE@*;oaf098023L(U)*8cer'
 app.config['SQLALCHEMY_DATABASE_URI'] = conn
 
 db = SQLAlchemy(app)
+
 
 class g3_materials(db.Model):
     ID= db.Column(db.Integer, primary_key=True)
@@ -177,10 +181,8 @@ def delete_patrons(patronID):
         return redirect("/patrons")
 
 
-@app.route('/checkout')
-def checkout():
-    all_checkout= g3_circulation.query.all()
-    return render_template('checkout.html', checkout=all_checkout, pageTitle="Circulation")
+
+
 
 
 @app.route('/materials')
@@ -194,7 +196,7 @@ def search_materials():
         form = request.form
         search_value = form['search_string']
         search = "%{0}%".format(search_value)
-        results = g3_materials.query.filter(or_(g3_materials.title.like(search), g3_materials.author.like(search))).all()
+        results = g3_materials.query.filter(or_(g3_materials.title.like(search), g3_materials.materialType.like(search),g3_materials.author.like(search))).all()
         return render_template('materials.html', materials=results, pageTitle='Materials')
     else:
         return redirect('/materials')
@@ -202,19 +204,6 @@ def search_materials():
 @app.route('/add_material', methods=['GET','POST'])
 def add_materials():
     form = MaterialsForm()
-    if form.validate_on_submit(): #
-        patrons.patronID=form.patronID.data
-        patrons.first_name = form.first_name.data
-        patrons.last_name = form.last_name.data
-        patrons.birthdate = form.birthdate.data
-        patrons.address1 = form.address1.data
-        patrons.address2 = form.address2.data
-        patrons.city = form.city.data
-        patrons.state = form.state.data
-        patrons.zip = form.zip.data
-        patrons.phone = form.phone.data
-        patrons.phone2 = form.phone2.data
-        patrons.email = form.email.data
     if form.validate_on_submit():
         material = g3_materials(materialType=form.materialType.data, callNumber= form.callNumber.data, title=form.title.data, author=form.author.data, publisher = form.publisher.data, copyright = form.copyright.data, ISBN = form.ISBN.data, description = form.description.data)
         db.session.add(material)
@@ -304,11 +293,8 @@ def confirm(circulationID):
 
 @app.route('/overdue', methods=['GET', 'POST'])
 def overdue():
-    if request.method == 'POST':
         overdue = g3_circulation.query.filter(g3_circulation.dueDate<date.today())
         return render_template('circulation.html', circulation=overdue, pageTitle='Circulation')
-    else:
-        return redirect('/circulation')
 
 @app.route('/due', methods=['GET', 'POST'])
 def due():

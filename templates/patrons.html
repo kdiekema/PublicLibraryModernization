@@ -1,25 +1,32 @@
 {% extends 'base.html' %}
-{% block body %}
-<div>
-   <p> <a href="{{url_for('.add_patrons')}}"> Add New Patron</a>
-  <h3>{{ legend }}</h3>
+{% block app_content %}
+<div class="col-sm-12">
+
+  <h3>Patrons</h3>
+  <hr>
 
   <form method="POST">
      <input type="text" autofocus="autofocus" name = "search_string">
      <input type="submit" formaction = "/search_patrons" value="Search">
    </form>
-
+<br/>
           {% if patrons %}
           <table>
                 <thead>
                     <tr>
 
                         <th>Patron ID</th>
+						<th>&emsp;</th>
                         <th>First Name</th>
+						<th>&emsp;</th>
                         <th>Last Name</th>
+						<th>&emsp;</th>
                         <th>Phone</th>
+						<th>&emsp;</th>
                         <th>Phone 2</th>
+						<th>&emsp;</th>
                         <th>Email</th>
+						<th>&emsp;</th>
 
                     </tr>
                 </thead>
@@ -29,11 +36,17 @@
                     <tr>
 
                         <td> {{ row.patronID }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.first_name }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.last_name }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.phone }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.phone2 }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.email }}</td>
+						<td>&emsp;</td>
 
             <td>
               <form action="{{ url_for('patron', patronID=row.patronID) }}" method="POST">
@@ -44,5 +57,12 @@
                     {% endfor %}
                     </tbody>
                 </table>
+				<hr>
+				<div class="col-sm-1">
+              <form action="{{url_for('.add_patrons')}}">
+			  <input type="submit" value="Add new Patrons" class="btn btn-info" />
+			  </form> 
+	    </div>
+</div>
         {% endif %}
         {% endblock %}

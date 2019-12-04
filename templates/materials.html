@@ -1,25 +1,27 @@
 {% extends 'base.html' %}
-{% block body %}
-<div>
-   <p> <a href="{{url_for('.add_materials')}}"> Add New Material</a>
-  <h3>{{ legend }}</h3>
-
+{% block app_content %}
+<div class="col-sm-12">
+  <h3>Materials</h3>
+<hr>
   <form method="POST">
      <input type="text" autofocus="autofocus" name = "search_string">
      <input type="submit" formaction = "/search_materials" value="Search">
    </form>
-
+<br/>
           {% if materials %}
           <table>
                 <thead>
                     <tr>
 
                         <th>Material ID</th>
+						<th>&emsp;</th>
                         <th>Material Type</th>
+						<th>&emsp;</th>
                         <th>Title</th>
+						<th>&emsp;</th>
                         <th>Author</th>
-                        <th>Publisher</th>
-                        <th>ISBN</th>
+						<th>&emsp;</th>
+
 
 
                     </tr>
@@ -30,11 +32,14 @@
                     <tr>
 
                         <td> {{ row.ID }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.materialType }}</td>
+						<td>&emsp;</td>
                         <td> {{ row.title }} </td>
+						<td>&emsp;</td>
                         <td> {{ row.author }} </td>
-                        <td>{{row.publisher}} </td>
-                        <td> {{ row.ISBN }} </td>
+						<td>&emsp;</td>
+
 
 
 
@@ -47,5 +52,13 @@
                     {% endfor %}
                     </tbody>
                 </table>
+				<hr>
+				<div class="col-sm-1">
+              <form action="{{url_for('.add_materials')}}">
+			  <input type="submit" value="Add new Material" class="btn btn-info" />
+			  </form> 
+			  <br/>
+			  <br/>
+</div>
         {% endif %}
         {% endblock %}

@@ -1,23 +1,35 @@
 {% extends 'base.html' %}
-{% block body %}
+{% block app_content %}
 <div>
 
-  <h3>Materials</h3>
+  <h3>Material</h3>
+  <hr>
 
     {% if form %}
       <form method = "POST" action="">
           {{ form.csrf_token }}
+		  &emsp;
           {{form.ID.label}} {{form.ID}}
+		  &emsp;
           {{ form.materialType.label }} {{ form.materialType}}
+		  &emsp;
           {{ form.callNumber.label }} {{ form.callNumber}}
+		  &emsp;
           {{ form.title.label }} {{ form.title }}
+		  &emsp;
           {{ form.author.label }} {{ form.author }}
+		  &emsp;
           {{ form.publisher.label }} {{ form.publisher }}
+		  &emsp;
           {{ form.copyright.label }} {{ form.copyright }}
+		  &emsp;
           {{ form.ISBN.label }} {{ form.ISBN }}
+		  &emsp;
           {{ form.description.label }} {{ form.description }}
+		  &emsp;
 
           <input type="submit" formaction="{{url_for('update_materials', ID=form.ID)}}" value="Update">
+		  &emsp;
           <input type="submit" formaction="{{url_for('delete_materials', ID=form.ID)}}" value="Delete">
 
 
@@ -25,4 +37,14 @@
       </form>
       {% endif  %}
 </div>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
 {% endblock %}

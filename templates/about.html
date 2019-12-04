@@ -1,22 +1,45 @@
 {% extends 'base.html' %} 
-{% block body %}
-<H2>About the North Liberty Public Library</H2>
+{% block app_content %}
+<H2>About Us</H2>
+<hr>
 <br/>
-<p> dskjnsjkfdsnfdsjknfsknsfdkjjknsd </p>
-<div>
-	<div style="float:left">
-	<H3> Hours </H3>
+<div class="container">
+<div class="row">
+      <div class="col-md-3 mb-5">
+        <img src= "{{ url_for('static', filename='Images/library.jpg') }}" style="width:120px alt="Library"/>
+      </div>
+	  <div class="col-md-6 mb-5">
+	  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac massa erat. 
+Quisque feugiat pharetra efficitur. Suspendisse ullamcorper lorem justo, volutpat vestibulum nulla eleifend vitae. 
+In hac habitasse platea dictumst. Donec lorem mauris, laoreet feugiat efficitur sit amet, volutpat et ligula. 
+Phasellus non leo magna. Cras a fringilla lectus, elementum porta erat.</p>
+<p>Sed ultrices ipsum non volutpat aliquam. Etiam et tellus purus. 
+Duis dignissim, nulla ac porta dapibus, leo nunc vestibulum massa, non eleifend sem eros interdum neque. 
+Maecenas et nibh quis ex sodales blandit at ac libero. Curabitur efficitur condimentum tellus, nec eleifend metus aliquam quis. 
+Etiam id ipsum fermentum, ultricies tellus eu, pellentesque velit. Sed porttitor maximus diam non faucibus. Praesent nec neque velit. 
+Nullam non ipsum nulla. Maecenas eget tellus eros. Nullam tincidunt tellus vel nisl pulvinar, id lobortis tellus porta. 
+Vivamus dignissim quis nisi nec rhoncus. In ac bibendum tellus. Mauris sapien massa, pellentesque nec ornare quis, ultricies nec lorem. 
+Vivamus iaculis ut justo ut convallis. Quisque dictum leo quis ipsum cursus convallis.</p>
+	  </div>
+      <div class="col-md-3 mb-5">
+        	<H3> Hours </H3>
 	<p> Monday - Friday: 9-5 </p>
 	<p> Saturday: 9-12 </p>
 	<p> Sunday: CLOSED </p>
-	</div>
-	<div style="float:left">
-	<H3> Location <H3>
+	<H3> Location </H3>
 	<p>Somewhere in North Liberty</p>
 	<p> North Liberty, IA </p>
-	</div>
-	<div style="float:left">
 	<H3> Phone </H3>
 	<p>389-232-3231</p>
-	</div>
+
+      </div>
+    </div>
+    <!-- /.row -->
+
+
+</div>
+</div>
+<div class="col-sm-8">
+
+</div>
 {% endblock %}

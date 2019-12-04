@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% block app_content %}
-  <h3>Circulation</h3>
-<hr>
-<div class="col-sm-12">
-	
+<div>
+   <p> <a href="{{url_for('.checkout')}}"> Checkout a Material </a> </p>
+
   <h3>{{ legend }}</h3>
 
           {% if circulation %}
@@ -52,31 +51,6 @@
                     {% endfor %}
                     </tbody>
                 </table>
-				<hr>
-				<div class="col-sm-12">
-		<div class="col-sm-1">
-              <form action="{{url_for('.checkout')}}" method="POST">
-			  <input type="submit" value="Check Out" class="btn btn-info" />
-			  </form> 
-	    </div>
-		<div class="col-sm-1">					   
-				<form action="{{ url_for('overdue')}}" method="POST">
-				<input type="submit" value="Overdue" class="btn btn-info" />
-			    </form>
-	    </div>
-	    <div class="col-sm-1">
-				<form action="{{ url_for('due')}}" method="POST">
-				<input type="submit" value="Due Today" class="btn btn-info" />
-				</form>
-	    </div>
-	    <div class="col-sm-1">
-				<form action="{{ url_for('reports')}}" method="POST">
-				<input type="submit" value="Reports" class="btn btn-info" />
-			    </form>					   
-		</div>
-	</div>
-	<br>
 
-</div>				
         {% endif %}
         {% endblock %}
