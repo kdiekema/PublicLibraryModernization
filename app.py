@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from flask_bootstrap import Bootstrap
 import pymysql
-import secrets
+#import secrets
 import datetime
 from datetime import date
 import os
