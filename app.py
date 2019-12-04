@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 from flask_bootstrap import Bootstrap
 import pymysql
-#import secrets
+import secrets
 import datetime
 from datetime import date
 import os
@@ -22,7 +22,7 @@ conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(dbuser, dbpass, dbhost, dbname)
 #conn = "mysql+pymysql://{0}:{1}@{2}/{3}".format(secrets.dbuser, secrets.dbpass, secrets.dbhost, secrets.dbname)
 
 app = Flask(__name__)
-app = Bootstrap(app)
+Bootstrap(app)
 
 app.config['SECRET_KEY']= 'aliq!#LiNE@*;oaf098023L(U)*8cer'
 app.config['SQLALCHEMY_DATABASE_URI'] = conn
